@@ -13,19 +13,19 @@ public class Main {
         MachineOfPost machine1=new MachineOfPost();
         Program commands = new Program();
 
-        for (int j=0;j<list.size();j++) {
+        for (int numberFileLine = 0; numberFileLine <list.size(); numberFileLine++) {
 
-            String str = list.get(j);
-            if (j==0){
-                machine1.splittingHead(str);
+            String fileLine = list.get(numberFileLine);
+            if (numberFileLine ==0){
+                machine1.splittingHead(fileLine);
             }else
-            if (j == 1) {
+            if (numberFileLine == 1) {
 
-               machine1.splittingTape(str);
+               machine1.splittingTape(fileLine);
             }
             else
             {
-                commands.splitting(str);
+                commands.splittingProgramCommand(fileLine);
             }
         }
         machine1.getHeadIndex();

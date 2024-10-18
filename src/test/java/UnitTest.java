@@ -18,25 +18,25 @@ public class UnitTest {
     @Test
     public void splitting() {
         Program object=new Program();
-        object.splitting("part1 part2 part3");
+        object.splittingProgramCommand("part1 part2 part3");
 
-        assertEquals("part1",object.getFirst(0));
+        assertEquals("part1",object.getFirstCommandElement(0));
         assertEquals("part2",object.getOperator(0));
-        assertEquals("part3",object.getSecond(0));
+        assertEquals("part3",object.getThirdCommandElement(0));
 
 
-        object.splitting("part3 part4");
-        assertEquals("part3",object.getFirst(1));
+        object.splittingProgramCommand("part3 part4");
+        assertEquals("part3",object.getFirstCommandElement(1));
         assertEquals("part4",object.getOperator(1));
-        assertEquals("0",object.getSecond(1));
+        assertEquals("0",object.getThirdCommandElement(1));
     }
 
     @Test
     public void testMultipleCommands() {
 
-        program.splitting("1 0 2");
-        program.splitting("2 1 3");
-        program.splitting("3 . 0");
+        program.splittingProgramCommand("1 0 2");
+        program.splittingProgramCommand("2 1 3");
+        program.splittingProgramCommand("3 . 0");
 
         program.getCommand();
 
@@ -44,48 +44,48 @@ public class UnitTest {
     }
     @Test
     public void testProgramRealisationWithDecreaseIndex() {
-        program.splitting("1 < 2");
-        program.splitting("2 . 0");
+        program.splittingProgramCommand("1 < 2");
+        program.splittingProgramCommand("2 . 0");
 
         machine.splittingTape("0 0 0");
 
         program.programRealisation(machine);
 
-        assertEquals(0, machine.getIndex());
+        assertEquals(0, machine.getCarriageIndex());
     }
 
     @Test
     public void testProgramRealisationWithIncreaseIndex() {
 
-        program.splitting("1 > 2");
-        program.splitting("2 . 0");
+        program.splittingProgramCommand("1 > 2");
+        program.splittingProgramCommand("2 . 0");
 
         machine.splittingTape("0 0 0");
 
         program.programRealisation(machine);
 
-        assertEquals(1, machine.getIndex());
+        assertEquals(1, machine.getCarriageIndex());
     }
 
     @Test
     public void testProgramRealisationWithCondition() {
 
-        program.splitting("1 0 2");
-        program.splitting("2 ? 3,2");
-        program.splitting("3 . 0");
+        program.splittingProgramCommand("1 0 2");
+        program.splittingProgramCommand("2 ? 3,2");
+        program.splittingProgramCommand("3 . 0");
 
         machine.splittingTape("0 0 0");
 
         program.programRealisation(machine);
 
-        assertEquals(0, machine.getIndex());
+        assertEquals(0, machine.getCarriageIndex());
     }
 
     @Test
     public void testProgramRealisationChargeValue0() {
 
-        program.splitting("1 0 2");
-        program.splitting("2 . 0");
+        program.splittingProgramCommand("1 0 2");
+        program.splittingProgramCommand("2 . 0");
 
         machine.splittingTape("1 2 3");
 
@@ -97,8 +97,8 @@ public class UnitTest {
     @Test
     public void testProgramRealisationChargeValue1() {
 
-        program.splitting("1 1 2");
-        program.splitting("2 . 0");
+        program.splittingProgramCommand("1 1 2");
+        program.splittingProgramCommand("2 . 0");
 
         machine.splittingTape("1 2 3");
 
@@ -110,20 +110,20 @@ public class UnitTest {
     @Test
     public void testExitConditionWithDot() {
 
-        program.splitting("1 . 2");
-        program.splitting("2 0 1");
+        program.splittingProgramCommand("1 . 2");
+        program.splittingProgramCommand("2 0 1");
 
         machine.splittingTape("1 2 3");
 
         program.programRealisation(machine);
 
-        assertEquals(0, machine.getIndex());
+        assertEquals(0, machine.getCarriageIndex());
     }
     
     @Test
     public void testSplittingTape() {
         machine.splittingTape("1 2 3 4 5");
-        assertEquals(0, machine.getIndex());
+        assertEquals(0, machine.getCarriageIndex());
         machine.getTape();
     }
 
@@ -131,21 +131,21 @@ public class UnitTest {
     public void testIncreaseIndex() {
         machine.splittingTape("1 2 3 4");
         machine.increaseIndex();
-        assertEquals(1, machine.getIndex());
+        assertEquals(1, machine.getCarriageIndex());
         machine.increaseIndex();
-        assertEquals(2, machine.getIndex());
+        assertEquals(2, machine.getCarriageIndex());
         machine.increaseIndex();
-        assertEquals(3, machine.getIndex());
+        assertEquals(3, machine.getCarriageIndex());
     }
 
     @Test
     public void testDecreaseIndex() {
         machine.splittingTape("1 2 3 4");
         machine.decreaseIndex();
-        assertEquals(0, machine.getIndex());
+        assertEquals(0, machine.getCarriageIndex());
         machine.increaseIndex();
         machine.decreaseIndex();
-        assertEquals(0, machine.getIndex());
+        assertEquals(0, machine.getCarriageIndex());
     }
 
     @Test
@@ -166,14 +166,14 @@ public class UnitTest {
     @Test
     public void testChargeValue() {
         machine.splittingTape("0 0");
-        machine.chargeValue(5);
-        assertEquals(5,  machine.getTapeValue(machine.getIndex()));
+        machine.chargeCarriageValue(5);
+        assertEquals(5,  machine.getTapeValue(machine.getCarriageIndex()));
     }
 
     @Test
     public void testSplittingHead() {
         machine.splittingHead("X | Y Z");
-        assertEquals(3, machine.getIndex());
+        assertEquals(3, machine.getCarriageIndex());
     }
 
     @Test
@@ -186,10 +186,10 @@ public class UnitTest {
     @Test
     public void testIncreaseIndexWithEmptyTape() {
 
-        assertEquals(0, machine.getIndex());
+        assertEquals(0, machine.getCarriageIndex());
 
         machine.increaseIndex();
-        assertEquals(1, machine.getIndex());
+        assertEquals(1, machine.getCarriageIndex());
 
         assertEquals(0,  machine.getTapeValue(0));
     }

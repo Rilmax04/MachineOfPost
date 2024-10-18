@@ -3,67 +3,67 @@ import java.util.LinkedList;
 public class MachineOfPost {
 
     private final LinkedList<Integer> tapeElements=new LinkedList<>();
-    private int index=0;
+    private int carriageIndex =0;
 
-    public void splittingTape(String str) {
-        String[] element = str.split(" ");
-        for (String el : element) {
-            tapeElements.add(Integer.parseInt(el)) ;
+    public void splittingTape(String tape) {
+        String[] elementOfTape = tape.split(" ");
+        for (String element : elementOfTape) {
+            tapeElements.add(Integer.parseInt(element)) ;
         }
     }
     public void increaseIndex(){
-        index++;
-        if (index>tapeElements.size())
-            tapeElements.add(index-1,0);
+        carriageIndex++;
+        if (carriageIndex >tapeElements.size())
+            tapeElements.add(carriageIndex -1,0);
 
     }
     public void decreaseIndex(){
-        index--;
-        if (index<0)
+        carriageIndex--;
+        if (carriageIndex <0)
         {
             tapeElements.add(0,0);
-            index=0;
+            carriageIndex =0;
         }
     }
-    public String condition(String str)
+    public String condition(String secondElement)
     {
-        String [] secondElement= str.split(",");
-        if (tapeElements.get(index)==0)
-        return secondElement[0];
-        else return secondElement[1];
+        String [] partSecondElement= secondElement.split(",");
+        if (tapeElements.get(carriageIndex)==0)
+        return partSecondElement[0];
+        else return partSecondElement[1];
     }
 
-    public void chargeValue(int value)
+    public void chargeCarriageValue(int value)
     {
-        tapeElements.set(index,value);
+        tapeElements.set(carriageIndex,value);
     }
 
-    public void splittingHead(String str) {
-        String[] element = str.split(" ");
+    public void splittingHead(String firstFileLine) {
+        String[] element = firstFileLine.split(" ");
         for (String el : element) {
-            index++;
+            carriageIndex++;
             if (el.equals("|")) {
-                index/=2;
+                carriageIndex /=2;
             }
         }
     }
 
     public  void getHeadIndex()
     {
-        System.out.println(index);
+        System.out.println(carriageIndex);
     }
 
     public void getTape()
     {
-        for (Integer el:tapeElements)
-            System.out.print(el+" ");
+        for (Integer tapeElement :tapeElements)
+            System.out.print(tapeElement +" ");
     }
     public int getTapeValue(int index)
     {
        return tapeElements.get(index);
     }
 
-    public int getIndex() {
-        return index;
+    public int getCarriageIndex() {
+        return carriageIndex;
     }
 }
