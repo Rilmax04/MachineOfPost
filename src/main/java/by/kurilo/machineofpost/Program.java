@@ -1,3 +1,5 @@
+package by.kurilo.machineofpost;
+
 import java.util.LinkedList;
 
 public class Program {
